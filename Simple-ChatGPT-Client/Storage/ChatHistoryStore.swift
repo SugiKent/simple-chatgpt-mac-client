@@ -31,7 +31,7 @@ class ChatHistoryStore {
     }
     
     func loadMessages(by id: Int) async throws -> [ChatMessage] {
-        var pastHistory = try await load()
+        let pastHistory = try await load()
         return pastHistory[id] ?? []
     }
     
