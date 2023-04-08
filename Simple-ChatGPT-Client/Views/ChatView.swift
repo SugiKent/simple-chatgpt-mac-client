@@ -14,14 +14,12 @@ struct ChatView: View {
     var body: some View {
         VStack {
             ScrollView {
-//                ForEach(Array(0..<(viewModel.messages.count + 1)).enumerated()) { index in
                 if viewModel.messages.count == 0 {
                     Text("Empty")
                         .font(.title3)
-                        .bold
                 }
-                ForEach(Array(viewModel.messages.enumerated()), id: \.element) { message in
-//                    if let message = viewModel.messages[index] {
+                ForEach(0..<(viewModel.messages.count + 1), id: \.self) { index in
+                    if let message = viewModel.messages[index] {
                         HStack {
                             if message.role == .user {
                                 Spacer()
@@ -38,9 +36,10 @@ struct ChatView: View {
                         }
                         .padding(.vertical, 10)
                         .padding(.horizontal, 5)
-//                    } else {
-//                        Text("Empty")
-//                    }
+                    } else {
+                        Text("Empty")
+                            .font(.title3)
+                    }
                 }
                 if viewModel.loading {
                     ProgressView("かんがえちゅう・・・", value: 0.5)
@@ -65,16 +64,16 @@ struct ChatView: View {
                         .tracking(2)
                         .font(.title3)
                         .fontWeight(.semibold)
-                        .foregroundColor(.white)
+                        .foregroundColor(.black)
                         .padding(.vertical, 4)
                         .padding(.horizontal, 4)
                         .overlay(
                             RoundedRectangle(cornerRadius: 3)
-                                .stroke(.blue, lineWidth: 3)
+                                .stroke(.black, lineWidth: 3)
                         )
                 }
                 .disabled(viewModel.loading)
-                .background(.blue)
+                .background(.white)
             }
         }
     }

@@ -14,13 +14,9 @@ final class OpenAIAPIClient: ObservableObject {
     let openAI = OpenAISwift(authToken: "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")
 
     
-    func callChatAPI() async throws -> OpenAI<MessageResult> {
-        var chatMessages = [
-            ChatMessage(role: .user, content: "あなたは誰ですか？")
-        ]
-        print(chatMessages)
+    func callChatAPI(messages: [ChatMessage]) async throws -> OpenAI<MessageResult> {
         let res = try await openAI.sendChat(
-            with: chatMessages,
+            with: messages,
             model: .chat(.chatgpt)
         )
         return res
