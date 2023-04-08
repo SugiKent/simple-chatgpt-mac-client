@@ -6,39 +6,50 @@
 //
 
 import SwiftUI
+import Combine
+import OpenAISwift
 
 struct ChatView: View {
-    @ObservedObject var viewModel = ChatViewModel()
+    @ObservedObject var viewModel: ChatViewModel
+//    @EnvironmentObject var chatHistoryEnv: ChatHistoryEnvironment
     @State private var text = ""
+//    @ObservedObject var historyViewModel: ChatHistoryViewModel
+//    let loadHistory: (() -> Void)?
+    
+//    init(loadHistory: ( () -> Void)? = nil) {
+//        self.loadHistory = loadHistory
+//    }
+    
+    init(viewModel: ChatViewModel) {
+        self.viewModel = viewModel
+        print("xxx [ChatView init] called")
+    }
     
     var body: some View {
+        let _ = Self._printChanges()
         VStack {
             ScrollView {
                 if viewModel.messages.count == 0 {
                     Text("Empty")
                         .font(.title3)
-                }
-                ForEach(0..<(viewModel.messages.count + 1), id: \.self) { index in
-                    if let message = viewModel.messages[index] {
+                } else {
+                    ForEach(0..<viewModel.messages.count, id: \.self) { index in
                         HStack {
-                            if message.role == .user {
+                            if viewModel.messages[index].role == .user {
                                 Spacer()
                             }
-                            Text(message.content)
+                            Text(viewModel.messages[index].content)
                                 .padding(.vertical, 8)
                                 .padding(.horizontal, 16)
-                                .background(message.role == .assistant ? .gray : .blue)
+                                .background(viewModel.messages[index].role == .assistant ? .black : .blue)
                                 .foregroundColor(.white)
                                 .cornerRadius(12)
-                            if message.role == .assistant {
+                            if viewModel.messages[index].role == .assistant {
                                 Spacer()
                             }
                         }
                         .padding(.vertical, 10)
                         .padding(.horizontal, 5)
-                    } else {
-                        Text("Empty")
-                            .font(.title3)
                     }
                 }
                 if viewModel.loading {
@@ -48,40 +59,50 @@ struct ChatView: View {
                 }
                 if let errorMessage = viewModel.errorMessage {
                     Text(errorMessage)
-                        .foregroundColor(.pink)
-                        .background(.red)
+                        .foregroundColor(.red)
+                        .background(.white)
                 }
             }
             Spacer()
-            HStack {
-                TextField("なにかお困りですか", text: $text)
+            HStack(alignment: .center) {
+                TextEditor(text: $text)
+                    .font(.body)
+                    .frame(height: 100)
+                    .lineLimit(nil)
+                    .lineSpacing(4)
                     .disabled(viewModel.loading)
+                    .cornerRadius(8)
                 Button(action: {
                     viewModel.onSubmit(text: text)
                     text = ""
+//                    loadHistory?()
                 }) {
                     Text("送信")
-                        .tracking(2)
                         .font(.title3)
+                        .frame(width: 60, height: 60)
                         .fontWeight(.semibold)
-                        .foregroundColor(.black)
+                        .foregroundColor(viewModel.loading || text.isEmpty ? .gray : .white)
                         .padding(.vertical, 4)
                         .padding(.horizontal, 4)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 3)
-                                .stroke(.black, lineWidth: 3)
-                        )
                 }
-                .disabled(viewModel.loading)
-                .background(.white)
+                .keyboardShortcut(KeyEquivalent.return, modifiers: [.command])
+                .disabled(viewModel.loading || text.isEmpty)
+                .background(viewModel.loading || text.isEmpty ? .clear : .blue)
             }
+            .frame(minHeight: 100)
         }
+//        .onReceive(viewModel.$messages, perform: { value in
+//            print(value)
+        // 無限ループしちゃう
+//            historyViewModel.loadHistory()
+//        })
     }
 }
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView()
+//        ChatView(loadHistory: {})
+        ChatView(viewModel: ChatViewModel())
     }
 }
 

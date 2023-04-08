@@ -12,13 +12,16 @@ struct HistoryMenuItemView: View {
     let subtitle: String
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading, spacing: 0) {
             Text(title)
-                .font(.title3)
+                .padding(.bottom, 2)
+                .font(.body)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
             Text(subtitle)
                 .font(.caption)
+                .foregroundColor(.gray)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         }
-        .padding()
     }
 }
 

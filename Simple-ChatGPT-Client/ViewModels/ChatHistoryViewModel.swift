@@ -9,46 +9,42 @@ import Foundation
 import OpenAISwift
 
 class ChatHistoryViewModel: ObservableObject {
-    @Published var history: [Int: [ChatMessage]] = [:]
-    @Published var keys: [Int] = []
-    @Published var values: [[ChatMessage]] = []
+    @Published var menuItems: [MenuItem] = []
     
     @MainActor
     func loadHistory() {
+        print("xxx [ChatHistoryViewModel loadHistory] called")
         Task {
             do {
-                history = try await ChatHistoryStore.load()
-                history = mockChatHistory
-                keys = history.map { $0.key }
-                values = keys.compactMap { history[$0] }
+                let history = try await ChatHistoryStore.shared.load()
+                let keys = history.map { $0.key }.sorted { prev, next in
+                    next < prev
+                }
+                menuItems = keys.compactMap { key in
+                    guard let target = history[key], let title = target.first?.content else { return nil }
+                    var second = ""
+                    if target.count > 1 {
+                        second = target[1].content
+                    }
+                    return MenuItem(id: key, title: title, subTitle: second)
+                }
+                print("xxx [ChatHistoryViewModel loadHistory menuItems.count] \(menuItems.count)")
             } catch {
                 print(error.localizedDescription)
             }
         }
     }
-    
-    var mockChatHistory: [Int: [ChatMessage]] {
-        [
-            0: [
-                ChatMessage(role: .user, content: "これは最初の質問です。"),
-                ChatMessage(role: .assistant, content: "これは最初の回答分です。どれだけ長いかはまだわからない。"),
-            ],
-            1: [
-                ChatMessage(role: .user, content: "これは二個目の質問です。"),
-                ChatMessage(role: .assistant, content: "これは二個目の回答分です。どれだけ長いかはまだわからない。"),
-            ],
-            2: [
-                ChatMessage(role: .user, content: "これは3個目の質問です。"),
-                ChatMessage(role: .assistant, content: "これは3個目の回答分です。どれだけ長いかはまだわからない。"),
-            ],
-            3: [
-                ChatMessage(role: .user, content: "This is th forth question."),
-                ChatMessage(role: .assistant, content: "This is the forth answer. We do not know how long it is."),
-            ],
-            4: [
-                ChatMessage(role: .user, content: "これは最初の質問です。質問はまだ返ってきてません。"),
-            ],
-            5: [],
-        ]
+
+    @MainActor
+    func removeHistory(by id: Int) {
+        Task {
+            do {
+                try await ChatHistoryStore.shared.remove(by: id)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+
     }
 }
+

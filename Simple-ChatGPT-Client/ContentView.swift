@@ -6,25 +6,86 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ContentView: View {
     @ObservedObject var viewModel = ChatHistoryViewModel()
+    @ObservedObject var chatViewModel = ChatViewModel()
+    @State private var cancellable: AnyCancellable?
+    
+    @State private var apiKeyField = OpenAIAPIClient.shared.apiKey
+    @State private var temperature = OpenAIAPIClient.shared.temperature
+    @State private var isShowSettingSheet = false
     
     var body: some View {
-        NavigationSplitView() {
-            ScrollView {
+        let _ = Self._printChanges()
+        VStack {
+            NavigationSplitView() {
                 List {
-                    ForEach(viewModel.keys.indices, id: \.self) { keyIndex in
-                        HistoryMenuItemView(title: viewModel.values[keyIndex].first?.content ?? "タイトルなし", subtitle: viewModel.values[keyIndex].count > 1 ? viewModel.values[keyIndex][1].content : "")
+                    ForEach(viewModel.menuItems) { menuItem in
+                        Button(action: {
+                            chatViewModel.setup(by: menuItem.id)
+                        }) {
+                            HistoryMenuItemView(title: menuItem.title, subtitle: menuItem.subTitle)
+                        }
+                        .contextMenu(menuItems: {
+                            Button(action: {
+                                viewModel.removeHistory(by: menuItem.id)
+                            }, label: {
+                                Text("削除")
+                            })
+                        })
+                        .buttonStyle(.plain)
+                        .padding(.bottom, 4)
                     }
                 }
+                .onAppear {
+                    viewModel.loadHistory()
+                    cancellable = ChatHistoryStore.shared.updateHistorySubject.receive(on: DispatchQueue.main)
+                        .sink { val in
+                            if val {
+                                viewModel.loadHistory()
+                            }
+                        }
+                }
+            } detail: {
+                ChatView(viewModel: chatViewModel)
+                    .padding()
             }
-        } detail: {
-            ChatView()
-                .padding()
-        }
-        .onAppear {
-            viewModel.loadHistory()
+            .toolbar {
+                ToolbarItemGroup {
+                    Button(action: {
+                        chatViewModel.buildNew()
+                    }, label: {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                    })
+                    Spacer()
+                    Button(action: {
+                        isShowSettingSheet = true
+                    }, label: {
+                        Image(systemName: "gear")
+                            .resizable()
+                            .frame(width: 18, height: 18)
+                    })
+                    .sheet(isPresented: $isShowSettingSheet, content: {
+                        VStack {
+                            TextField("API Key", text: $apiKeyField)
+                                .frame(width: 100)
+                            TextField("temperature between 0.0 and 2.0", text: $temperature)
+                                .frame(width: 100)
+                            Button(action: {
+                                OpenAIAPIClient.shared.saveSetting(apiKey: apiKeyField, temperature: temperature)
+                                isShowSettingSheet = false
+                            }) {
+                                Text("Save")
+                            }
+                        }
+                        .padding(30)
+                    })
+                }
+            }
         }
     }
 }
@@ -32,5 +93,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+//            .environmentObject(ChatHistoryEnvironment())
     }
 }

@@ -12,6 +12,7 @@ struct Simple_ChatGPT_ClientApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+//                .environmentObject(ChatHistoryEnvironment())
         }
     }
 }
