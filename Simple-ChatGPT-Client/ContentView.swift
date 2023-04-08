@@ -8,14 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var viewModel = ChatHistoryViewModel()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationSplitView() {
+            ScrollView {
+                List {
+                    ForEach(viewModel.keys.indices, id: \.self) { keyIndex in
+                        HistoryMenuItemView(title: viewModel.values[keyIndex].first?.content ?? "タイトルなし", subtitle: viewModel.values[keyIndex].count > 1 ? viewModel.values[keyIndex][1].content : "")
+                    }
+                }
+            }
+        } detail: {
+            ChatView()
+                .padding()
         }
-        .padding()
+        .onAppear {
+            viewModel.loadHistory()
+        }
     }
 }
 

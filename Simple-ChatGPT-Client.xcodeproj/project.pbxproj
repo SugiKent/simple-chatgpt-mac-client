@@ -11,6 +11,13 @@
 		D791C5F329E155A1000B6226 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D791C5F229E155A1000B6226 /* ContentView.swift */; };
 		D791C5F529E155A2000B6226 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D791C5F429E155A2000B6226 /* Assets.xcassets */; };
 		D791C5F929E155A2000B6226 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D791C5F829E155A2000B6226 /* Preview Assets.xcassets */; };
+		D791C60129E1560E000B6226 /* HistoryMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D791C60029E1560E000B6226 /* HistoryMenuItemView.swift */; };
+		D791C60329E15798000B6226 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D791C60229E15798000B6226 /* ChatView.swift */; };
+		D791C60629E157F0000B6226 /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = D791C60529E157F0000B6226 /* OpenAISwift */; };
+		D791C60929E1580B000B6226 /* OpenAIAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D791C60829E1580B000B6226 /* OpenAIAPIClient.swift */; };
+		D791C60C29E15A06000B6226 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D791C60B29E15A06000B6226 /* ChatViewModel.swift */; };
+		D791C60F29E15F3D000B6226 /* ChatHistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D791C60E29E15F3D000B6226 /* ChatHistoryStore.swift */; };
+		D791C61129E15FCE000B6226 /* ChatHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D791C61029E15FCE000B6226 /* ChatHistoryViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +27,12 @@
 		D791C5F429E155A2000B6226 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D791C5F629E155A2000B6226 /* Simple_ChatGPT_Client.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Simple_ChatGPT_Client.entitlements; sourceTree = "<group>"; };
 		D791C5F829E155A2000B6226 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D791C60029E1560E000B6226 /* HistoryMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryMenuItemView.swift; sourceTree = "<group>"; };
+		D791C60229E15798000B6226 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		D791C60829E1580B000B6226 /* OpenAIAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIAPIClient.swift; sourceTree = "<group>"; };
+		D791C60B29E15A06000B6226 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		D791C60E29E15F3D000B6226 /* ChatHistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatHistoryStore.swift; sourceTree = "<group>"; };
+		D791C61029E15FCE000B6226 /* ChatHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatHistoryViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D791C60629E157F0000B6226 /* OpenAISwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,6 +66,10 @@
 		D791C5EF29E155A1000B6226 /* Simple-ChatGPT-Client */ = {
 			isa = PBXGroup;
 			children = (
+				D791C60D29E15F2F000B6226 /* Storage */,
+				D791C60A29E159F8000B6226 /* ViewModels */,
+				D791C60729E157FD000B6226 /* API */,
+				D791C5FF29E155F7000B6226 /* Views */,
 				D791C5F029E155A1000B6226 /* Simple_ChatGPT_ClientApp.swift */,
 				D791C5F229E155A1000B6226 /* ContentView.swift */,
 				D791C5F429E155A2000B6226 /* Assets.xcassets */,
@@ -67,6 +85,40 @@
 				D791C5F829E155A2000B6226 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D791C5FF29E155F7000B6226 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D791C60029E1560E000B6226 /* HistoryMenuItemView.swift */,
+				D791C60229E15798000B6226 /* ChatView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D791C60729E157FD000B6226 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				D791C60829E1580B000B6226 /* OpenAIAPIClient.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		D791C60A29E159F8000B6226 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				D791C60B29E15A06000B6226 /* ChatViewModel.swift */,
+				D791C61029E15FCE000B6226 /* ChatHistoryViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		D791C60D29E15F2F000B6226 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				D791C60E29E15F3D000B6226 /* ChatHistoryStore.swift */,
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -85,6 +137,9 @@
 			dependencies = (
 			);
 			name = "Simple-ChatGPT-Client";
+			packageProductDependencies = (
+				D791C60529E157F0000B6226 /* OpenAISwift */,
+			);
 			productName = "Simple-ChatGPT-Client";
 			productReference = D791C5ED29E155A1000B6226 /* Simple-ChatGPT-Client.app */;
 			productType = "com.apple.product-type.application";
@@ -113,6 +168,9 @@
 				Base,
 			);
 			mainGroup = D791C5E429E155A1000B6226;
+			packageReferences = (
+				D791C60429E157F0000B6226 /* XCRemoteSwiftPackageReference "OpenAISwift" */,
+			);
 			productRefGroup = D791C5EE29E155A1000B6226 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -139,8 +197,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D791C60329E15798000B6226 /* ChatView.swift in Sources */,
+				D791C60129E1560E000B6226 /* HistoryMenuItemView.swift in Sources */,
 				D791C5F329E155A1000B6226 /* ContentView.swift in Sources */,
+				D791C61129E15FCE000B6226 /* ChatHistoryViewModel.swift in Sources */,
 				D791C5F129E155A1000B6226 /* Simple_ChatGPT_ClientApp.swift in Sources */,
+				D791C60C29E15A06000B6226 /* ChatViewModel.swift in Sources */,
+				D791C60F29E15F3D000B6226 /* ChatHistoryStore.swift in Sources */,
+				D791C60929E1580B000B6226 /* OpenAIAPIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +418,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D791C60429E157F0000B6226 /* XCRemoteSwiftPackageReference "OpenAISwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adamrushy/OpenAISwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D791C60529E157F0000B6226 /* OpenAISwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D791C60429E157F0000B6226 /* XCRemoteSwiftPackageReference "OpenAISwift" */;
+			productName = OpenAISwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D791C5E529E155A1000B6226 /* Project object */;
 }
