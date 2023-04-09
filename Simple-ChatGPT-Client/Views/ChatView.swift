@@ -75,16 +75,23 @@ struct ChatView: View {
             }
             Spacer()
             HStack(alignment: .center) {
-                VStack {
+                VStack(alignment: .leading) {
                     TextEditor(text: $text)
-                        .padding(15)
+                        .padding(.top, 12)
+                        .padding(.bottom, 4)
+                        .padding(.horizontal, 8)
+                    Text("send with command + return")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                        .padding(.bottom, 4)
+                        .padding(.horizontal, 10)
                 }
-                .font(.body)
+                .font(.system(size: 14))
                 .background(.gray.opacity(0.2))
                 .cornerRadius(8)
                 .lineSpacing(4)
-                .frame(height: 130)
-                .frame(minHeight: 130)
+                .frame(height: 180)
+                .frame(minHeight: 180)
                 .padding(5)
                 .shadow(radius: 5)
                 Button(action: {
@@ -102,7 +109,7 @@ struct ChatView: View {
                 .keyboardShortcut(KeyEquivalent.return, modifiers: [.command])
                 .disabled(viewModel.loading || text.isEmpty)
             }
-            .frame(minHeight: 130)
+            .frame(minHeight: 180)
         }
     }
 }
