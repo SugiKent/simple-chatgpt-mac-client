@@ -17,7 +17,6 @@ class ChatHistoryStore {
     }
     
     func load() async throws -> [Int: [ChatMessage]] {
-        print("xxx [ChatHistoryStore load] called")
         do {
             let fileURL = try fileURL()
             guard let file = try? FileHandle(forReadingFrom: fileURL) else {
@@ -36,7 +35,6 @@ class ChatHistoryStore {
     }
     
     func save(messages: [ChatMessage], targetId: Int? = nil) async throws -> Int {
-        print("xxx [ChatHistoryStore save] called")
         var pastHistory = try await load()
         var id = targetId ?? 0
         if targetId == nil {
@@ -50,13 +48,12 @@ class ChatHistoryStore {
         let data = try JSONEncoder().encode(pastHistory)
         let outfile = try fileURL()
         try data.write(to: outfile)
-        print("xxx [ChatHistoryStore updateHistorySubject.send] reached")
         updateHistorySubject.send(true)
         return id
     }
     
     func remove(by id: Int) async throws {
-        var pastHistory = try await load()
+        let pastHistory = try await load()
         var newHistory: [Int: [ChatMessage]] = [:]
         pastHistory.forEach { (key: Int, value: [ChatMessage]) in
             guard key != id else { return }

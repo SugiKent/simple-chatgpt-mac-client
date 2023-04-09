@@ -18,7 +18,6 @@ class ChatViewModel: ObservableObject {
     @MainActor
     func onSubmit(text: String) {
         guard !text.isEmpty else { return }
-        print(text)
         messages.append(ChatMessage(role: .user, content: text))
         Task {
             loading = true

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		D7215D1629E1827D0089A5ED /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7215D1529E1827D0089A5ED /* MenuItem.swift */; };
+		D73ECF3F29E2B6BA00E84520 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = D73ECF3E29E2B6BA00E84520 /* MarkdownUI */; };
+		D73ECF4129E2CEA900E84520 /* NSTextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73ECF4029E2CEA900E84520 /* NSTextView+Extension.swift */; };
 		D791C5F129E155A1000B6226 /* Simple_ChatGPT_ClientApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D791C5F029E155A1000B6226 /* Simple_ChatGPT_ClientApp.swift */; };
 		D791C5F329E155A1000B6226 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D791C5F229E155A1000B6226 /* ContentView.swift */; };
 		D791C5F529E155A2000B6226 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D791C5F429E155A2000B6226 /* Assets.xcassets */; };
@@ -23,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		D7215D1529E1827D0089A5ED /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
+		D73ECF4029E2CEA900E84520 /* NSTextView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+Extension.swift"; sourceTree = "<group>"; };
 		D791C5ED29E155A1000B6226 /* Simple-ChatGPT-Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple-ChatGPT-Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D791C5F029E155A1000B6226 /* Simple_ChatGPT_ClientApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simple_ChatGPT_ClientApp.swift; sourceTree = "<group>"; };
 		D791C5F229E155A1000B6226 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -44,6 +47,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D791C60629E157F0000B6226 /* OpenAISwift in Frameworks */,
+				D73ECF3F29E2B6BA00E84520 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +65,7 @@
 		D7215D1729E187960089A5ED /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D73ECF4029E2CEA900E84520 /* NSTextView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -160,6 +165,7 @@
 			name = "Simple-ChatGPT-Client";
 			packageProductDependencies = (
 				D791C60529E157F0000B6226 /* OpenAISwift */,
+				D73ECF3E29E2B6BA00E84520 /* MarkdownUI */,
 			);
 			productName = "Simple-ChatGPT-Client";
 			productReference = D791C5ED29E155A1000B6226 /* Simple-ChatGPT-Client.app */;
@@ -191,6 +197,7 @@
 			mainGroup = D791C5E429E155A1000B6226;
 			packageReferences = (
 				D791C60429E157F0000B6226 /* XCRemoteSwiftPackageReference "OpenAISwift" */,
+				D73ECF3D29E2B6BA00E84520 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			productRefGroup = D791C5EE29E155A1000B6226 /* Products */;
 			projectDirPath = "";
@@ -218,6 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D73ECF4129E2CEA900E84520 /* NSTextView+Extension.swift in Sources */,
 				D791C60329E15798000B6226 /* ChatView.swift in Sources */,
 				D791C60129E1560E000B6226 /* HistoryMenuItemView.swift in Sources */,
 				D791C5F329E155A1000B6226 /* ContentView.swift in Sources */,
@@ -446,6 +454,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D73ECF3D29E2B6BA00E84520 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		D791C60429E157F0000B6226 /* XCRemoteSwiftPackageReference "OpenAISwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/adamrushy/OpenAISwift.git";
@@ -457,6 +473,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D73ECF3E29E2B6BA00E84520 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D73ECF3D29E2B6BA00E84520 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
 		D791C60529E157F0000B6226 /* OpenAISwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D791C60429E157F0000B6226 /* XCRemoteSwiftPackageReference "OpenAISwift" */;

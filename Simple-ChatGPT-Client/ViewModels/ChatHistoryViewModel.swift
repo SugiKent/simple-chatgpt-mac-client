@@ -13,7 +13,6 @@ class ChatHistoryViewModel: ObservableObject {
     
     @MainActor
     func loadHistory() {
-        print("xxx [ChatHistoryViewModel loadHistory] called")
         Task {
             do {
                 let history = try await ChatHistoryStore.shared.load()
@@ -28,7 +27,6 @@ class ChatHistoryViewModel: ObservableObject {
                     }
                     return MenuItem(id: key, title: title, subTitle: second)
                 }
-                print("xxx [ChatHistoryViewModel loadHistory menuItems.count] \(menuItems.count)")
             } catch {
                 print(error.localizedDescription)
             }

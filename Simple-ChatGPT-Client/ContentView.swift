@@ -18,7 +18,6 @@ struct ContentView: View {
     @State private var isShowSettingSheet = false
     
     var body: some View {
-        let _ = Self._printChanges()
         VStack {
             NavigationSplitView() {
                 List {
@@ -70,11 +69,17 @@ struct ContentView: View {
                             .frame(width: 18, height: 18)
                     })
                     .sheet(isPresented: $isShowSettingSheet, content: {
-                        VStack {
-                            TextField("API Key", text: $apiKeyField)
-                                .frame(width: 100)
-                            TextField("temperature between 0.0 and 2.0", text: $temperature)
-                                .frame(width: 100)
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text("API Key")
+                                TextField("sk-****", text: $apiKeyField)
+                                    .frame(width: 200)
+                            }
+                            HStack {
+                                Text("Temperaature")
+                                TextField("between 0.0 and 2.0", text: $temperature)
+                                    .frame(width: 200)
+                            }
                             Button(action: {
                                 OpenAIAPIClient.shared.saveSetting(apiKey: apiKeyField, temperature: temperature)
                                 isShowSettingSheet = false
@@ -82,7 +87,7 @@ struct ContentView: View {
                                 Text("Save")
                             }
                         }
-                        .padding(30)
+                        .padding(60)
                     })
                 }
             }
