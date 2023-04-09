@@ -38,7 +38,6 @@
 		D791C60B29E15A06000B6226 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		D791C60E29E15F3D000B6226 /* ChatHistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatHistoryStore.swift; sourceTree = "<group>"; };
 		D791C61029E15FCE000B6226 /* ChatHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatHistoryViewModel.swift; sourceTree = "<group>"; };
-		D7E157FA29E1ECD800ADB2D0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +99,6 @@
 				D791C5F429E155A2000B6226 /* Assets.xcassets */,
 				D791C5F629E155A2000B6226 /* Simple_ChatGPT_Client.entitlements */,
 				D791C5F729E155A2000B6226 /* Preview Content */,
-				D7E157FA29E1ECD800ADB2D0 /* README.md */,
 			);
 			path = "Simple-ChatGPT-Client";
 			sourceTree = "<group>";
