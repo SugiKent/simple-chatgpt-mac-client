@@ -12,5 +12,6 @@
 
 ## How to install
 
-[Releases](https://github.com/SugiKent/simple-chatgpt-mac-client/releases) から `*.app.zip` を install できます。
-野良アプリなので、DLしたら右クリックから開いてください。
+[Releases](https://github.com/SugiKent/simple-chatgpt-mac-client/releases) から `*.app.zip` を install できます。  
+野良アプリなので、DLしたら右クリックから開いてください。  
+右上の歯車から APIKey の設定をしてください。
