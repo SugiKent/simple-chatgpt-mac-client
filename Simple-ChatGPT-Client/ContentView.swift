@@ -16,6 +16,8 @@ struct ContentView: View {
     @State private var apiKeyField = OpenAIAPIClient.shared.apiKey
     @State private var temperature = OpenAIAPIClient.shared.temperature
     @State private var isShowSettingSheet = false
+    @State private var isShowSearchSheet = false
+    @State private var searchText = ""
     
     var body: some View {
         VStack {
@@ -60,7 +62,6 @@ struct ContentView: View {
                             .resizable()
                             .frame(width: 16, height: 16)
                     })
-                    Spacer()
                     Button(action: {
                         isShowSettingSheet = true
                     }, label: {
@@ -89,6 +90,20 @@ struct ContentView: View {
                         }
                         .padding(60)
                     })
+//                    Button(action: {
+//                        isShowSearchSheet.toggle()
+//                    }) {
+//                        Image(systemName: "magnifyingglass")
+//                    }
+//                    .keyboardShortcut("f", modifiers: [.command])
+//                    .sheet(isPresented: $isShowSearchSheet, content: {
+//                        VStack(alignment: .leading) {
+//                            TextField("question, answer, code...", text: $searchText)
+//                                .frame(width: 350, height: 80)
+//                            Spacer()
+//                        }
+//                        .padding(60)
+//                    })
                 }
             }
         }

@@ -17,60 +17,71 @@ struct ChatView: View {
 
     var body: some View {
         VStack {
-            ScrollView {
-                if viewModel.messages.count == 0 {
-                    Text("Empty")
-                        .font(.title3)
-                } else {
-                    ForEach(0..<viewModel.messages.count, id: \.self) { index in
-                        HStack {
-                            if viewModel.messages[index].role == .user {
-                                Spacer()
-                            }
-                            VStack {
-                                Markdown {
-                                    viewModel.messages[index].content
+            ScrollViewReader { reader in
+                ScrollView {
+                    if viewModel.messages.count == 0 {
+                        Text("Empty")
+                            .font(.title3)
+                    } else {
+                        ForEach(0..<viewModel.messages.count, id: \.self) { index in
+                            HStack {
+                                if viewModel.messages[index].role == .user {
+                                    Spacer()
                                 }
-                                .markdownTextStyle(\.code) {
-                                    FontFamilyVariant(.monospaced)
-                                    FontSize(.em(0.85))
-                                    ForegroundColor(.purple)
-                                    BackgroundColor(.purple.opacity(0.05))
+                                VStack {
+                                    Markdown {
+                                        viewModel.messages[index].content
+                                    }
+                                    .textSelection(.enabled)
+                                    .markdownTextStyle(\.code) {
+                                        FontFamilyVariant(.monospaced)
+                                        FontSize(.em(1))
+                                        ForegroundColor(.purple)
+                                        BackgroundColor(.purple.opacity(0.05))
+                                    }
+                                    .markdownBlockStyle(\.codeBlock) { configuration in
+                                        configuration.label
+                                            .padding(8)
+                                            .markdownTextStyle {
+                                                FontFamilyVariant(.monospaced)
+                                                FontSize(.em(1))
+                                            }
+                                            .foregroundColor(.white)
+                                            .background(.black.opacity(0.5))
+                                            .padding(.vertical, 12)
+                                    }
                                 }
-                                .markdownBlockStyle(\.codeBlock) { configuration in
-                                    configuration.label
-                                        .padding(8)
-                                        .markdownTextStyle {
-                                            FontFamilyVariant(.monospaced)
-                                            FontSize(.em(0.85))
-                                        }
-                                        .foregroundColor(.white)
-                                        .background(.black.opacity(0.5))
-                                        .padding(.vertical, 12)
+                                .padding(.vertical, 8)
+                                .padding(.horizontal, 16)
+                                .background(viewModel.messages[index].role == .assistant ? .black.opacity(0.25) : .blue.opacity(0.5))
+                                .foregroundColor(.white)
+                                .cornerRadius(12)
+                                if viewModel.messages[index].role == .assistant {
+                                    Spacer()
                                 }
                             }
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 16)
-                            .background(viewModel.messages[index].role == .assistant ? .black.opacity(0.25) : .blue.opacity(0.5))
-                            .foregroundColor(.white)
-                            .cornerRadius(12)
-                            if viewModel.messages[index].role == .assistant {
-                                Spacer()
-                            }
+                            .padding(.vertical, 10)
+                            .padding(.horizontal, 5)
                         }
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 5)
                     }
+                    if viewModel.loading {
+                        ProgressView("thinking...")
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .padding(.vertical, 16)
+                    }
+                    if let errorMessage = viewModel.errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .background(.white)
+                    }
+                    Text("")
+                        .padding(0)
+                        .id("bottomView")// Bottom スクロール用
                 }
-                if viewModel.loading {
-                    ProgressView("thinking...")
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .padding(.vertical, 16)
-                }
-                if let errorMessage = viewModel.errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                        .background(.white)
+                .onChange(of: viewModel.messages.count) { _ in
+                    withAnimation (.default){
+                        reader.scrollTo("bottomView")
+                    }
                 }
             }
             Spacer()
@@ -106,7 +117,7 @@ struct ChatView: View {
                         .padding(.vertical, 4)
                         .padding(.horizontal, 4)
                 }
-                .keyboardShortcut(KeyEquivalent.return, modifiers: [.command])
+                .keyboardShortcut(.return, modifiers: [.command])
                 .disabled(viewModel.loading || text.isEmpty)
             }
             .frame(minHeight: 180)
